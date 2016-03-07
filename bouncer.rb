@@ -1,19 +1,27 @@
-def check_laws(age, country,legal_stuff)
-  check_quit(country)
-  age = age.to_i
-
-  if (age == 16 || age == 17) && country.upcase == "UK"
+def check_UK_laws(age, country, legal_stuff)
+  if (age == 16 || age == 17)
     puts "Are you with your parents? (Y)es or (N)o"
     answer = gets.chomp
     if answer.upcase == "Y"
       puts legal_stuff[3]
-    else
+    elsif answer.upcase == "N"
       puts legal_stuff[0]
+    else
+      puts "Please enter a valid input"
+      check_UK_laws(age, country,legal_stuff)
     end
-  elsif age < 18
-    puts legal_stuff[0]
-  elsif age < 21 && country.upcase == "UK"
+  elsif age < 21
     puts legal_stuff[1..3]
+  end
+end
+
+def check_laws(age, country,legal_stuff)
+  if age < 21 && age > 15 && country == "UK"
+    check_UK_laws(age,country,legal_stuff)
+  end
+
+  if age < 18
+    puts legal_stuff[0]
   elsif age < 21
     puts legal_stuff[1..2]
   elsif age < 25
@@ -49,7 +57,7 @@ def set_age
   age = gets.chomp
   check_quit(age)
   check_input_age(age)
-  return age
+  return age.to_i
 end
 
 def set_country
@@ -57,7 +65,7 @@ def set_country
   country = gets.chomp
   check_quit(country)
   check_input_country(country)
-  return country
+  return country.upcase
 end
 
 def start
