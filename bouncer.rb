@@ -1,8 +1,6 @@
-def check_laws(age, country)
+def check_laws(age, country,legal_stuff)
   check_quit(country)
   age = age.to_i
-  legal_stuff = ["You can do Nothing", "You can vote!", "You can smoke!",
-                "You can drink!", "You can rent a car!"]
 
   if (age == 16 || age == 17) && country.upcase == "UK"
     puts "Are you with your parents? (Y)es or (N)o"
@@ -26,13 +24,31 @@ def check_laws(age, country)
 end
 
 def check_quit(quit)
-  if quit.upcase == "Q" then exit end
+  if quit.upcase == "Q"
+    puts "Goodbye!"
+    exit
+  end
+end
+
+def check_input_age(age)
+  if age.to_i <= 0
+    puts "Please enter a valid input"
+    set_age
+  end
+end
+
+def check_input_country(country)
+  if !(country.upcase == "US" || country.upcase == "UK")
+    puts "Please enter a valid input"
+    set_country
+  end
 end
 
 def set_age
   puts "How old are you? or you can (Q)uit"
   age = gets.chomp
   check_quit(age)
+  check_input_age(age)
   return age
 end
 
@@ -40,13 +56,16 @@ def set_country
   puts "Do you live in the (UK) or the (US)? or you can (Q)uit"
   country = gets.chomp
   check_quit(country)
+  check_input_country(country)
   return country
 end
 
 def start
+  legal_stuff = ["You can do Nothing", "You can vote!", "You can smoke!",
+                "You can drink!", "You can rent a car!"]
   age = set_age
   country = set_country
-  check_laws(age,country)
+  check_laws(age,country,legal_stuff)
 
   loop do
     puts "Would you like to change (A)ge, (C)ountry or (Q)uit?"
