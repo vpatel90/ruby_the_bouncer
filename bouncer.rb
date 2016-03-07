@@ -32,9 +32,7 @@ def country_check(age)
 end
 
 def check_quit(quit)
-  if quit.upcase == "Q"
-    exit
-  end
+  if quit.upcase == "Q" then exit end
 end
 
 loop do
