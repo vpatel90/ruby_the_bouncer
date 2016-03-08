@@ -1,7 +1,12 @@
+def input #adds the > whenever user is entering input
+  print ">"
+  return gets.chomp
+end
+
 def check_UK_laws(age, country, legal_stuff)
   if (age == 16 || age == 17)
     puts "Are you with your parents? (Y)es or (N)o"
-    answer = gets.chomp
+    answer = input
     if answer.upcase == "Y"
       puts legal_stuff[3]
     elsif answer.upcase == "N"
@@ -15,9 +20,12 @@ def check_UK_laws(age, country, legal_stuff)
   end
 end
 
-def check_laws(age, country,legal_stuff)
+def check_laws(age, country)
+  legal_stuff = ["You can do Nothing", "You can vote!", "You can smoke!",
+                "You can drink!", "You can rent a car!"]
+
   if age < 21 && age > 15 && country == "UK"
-    check_UK_laws(age,country,legal_stuff)
+    return check_UK_laws(age,country,legal_stuff)
   end
 
   if age < 18
@@ -33,9 +41,10 @@ end
 
 def check_quit(quit)
   if quit.upcase == "Q"
-    puts "Goodbye!"
+    puts"Goodbye!"
     exit
   end
+  return quit
 end
 
 def check_input_age(age)
@@ -46,7 +55,8 @@ def check_input_age(age)
 end
 
 def check_input_country(country)
-  if !(country.upcase == "US" || country.upcase == "UK")
+  valid_countries = ["US","UK"]
+  if !valid_countries.include?(country.upcase)
     puts "Please enter a valid input"
     set_country
   end
@@ -54,30 +64,26 @@ end
 
 def set_age
   puts "How old are you? or you can (Q)uit"
-  age = gets.chomp
-  check_quit(age)
+  age = check_quit(input)
   check_input_age(age)
   return age.to_i
 end
 
 def set_country
   puts "Do you live in the (UK) or the (US)? or you can (Q)uit"
-  country = gets.chomp
-  check_quit(country)
+  country = check_quit(input)
   check_input_country(country)
   return country.upcase
 end
 
 def start
-  legal_stuff = ["You can do Nothing", "You can vote!", "You can smoke!",
-                "You can drink!", "You can rent a car!"]
   age = set_age
   country = set_country
-  check_laws(age,country,legal_stuff)
+  check_laws(age,country)
 
   loop do
-    puts "Would you like to change (A)ge, (C)ountry or (Q)uit?"
-    change = gets.chomp
+    puts "Would you like to change (A)ge, (C)ountry, (B)oth or (Q)uit?"
+    change = input
     case change.upcase
     when "A"
       age = set_age
@@ -85,6 +91,8 @@ def start
     when "C"
       country = set_country
       check_laws(age, country)
+    when "B"
+      start
     when "Q"
       check_quit(change)
     else
