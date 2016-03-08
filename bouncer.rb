@@ -3,7 +3,7 @@ def input #adds the > whenever user is entering input
   return gets.chomp
 end
 
-def check_UK_laws(age, country, legal_stuff)
+def check_UK_laws(age, country, legal_stuff) #function for UK  specifics
   if (age == 16 || age == 17)
     puts "Are you with your parents? (Y)es or (N)o"
     answer = input
@@ -20,7 +20,7 @@ def check_UK_laws(age, country, legal_stuff)
   end
 end
 
-def check_laws(age, country)
+def check_laws(age, country) #function to check laws in countries
   legal_stuff = ["You can do Nothing", "You can vote!", "You can smoke!",
                 "You can drink!", "You can rent a car!"]
 
@@ -39,7 +39,7 @@ def check_laws(age, country)
   end
 end
 
-def check_quit(quit)
+def check_quit(quit) #function to check if user wants to quit
   if quit.upcase == "Q"
     puts"Goodbye!"
     exit
@@ -47,14 +47,14 @@ def check_quit(quit)
   return quit
 end
 
-def check_input_age(age)
+def check_input_age(age) #function to validate users age input
   if age.to_i <= 0
     puts "Please enter a valid input"
     set_age
   end
 end
 
-def check_input_country(country)
+def check_input_country(country) #function to validate users country
   valid_countries = ["US","UK"]
   if !valid_countries.include?(country.upcase)
     puts "Please enter a valid input"
@@ -62,14 +62,14 @@ def check_input_country(country)
   end
 end
 
-def set_age
+def set_age #function to set age input
   puts "How old are you? or you can (Q)uit"
   age = check_quit(input)
   check_input_age(age)
   return age.to_i
 end
 
-def set_country
+def set_country #function to set country input
   puts "Do you live in the (UK) or the (US)? or you can (Q)uit"
   country = check_quit(input)
   check_input_country(country)
